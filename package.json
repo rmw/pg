@@ -21,6 +21,7 @@
     "gatsby-plugin-manifest": "^5.0.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.30",
     "react": "^18.2.0",
+    "react-date-picker": "^9.1.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
