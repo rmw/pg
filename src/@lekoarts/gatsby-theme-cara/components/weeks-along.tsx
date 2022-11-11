@@ -8,10 +8,15 @@ const WeeksAlong = ({ dateString = ""}: {dateString?: string}) => {
   const currentDays = ((dt - et)/ (1000 * 60 * 60 * 24)) + startPgDays
   const currentWeeks = Math.floor(currentDays / 7)
   const currentDaysLeft = Math.floor(currentDays % 7)
+  const url = "https://www.whattoexpect.com/pregnancy/week-by-week/week-" + currentWeeks + ".aspx"
 
   return (
     <div>     
-        <h2>{currentWeeks} weeks and {currentDaysLeft} days</h2>
+        <h2>
+          <a href={url}>
+            {currentWeeks} weeks and {currentDaysLeft} days
+          </a>
+        </h2>
     </div>
   )
 }

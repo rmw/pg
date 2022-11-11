@@ -1,10 +1,10 @@
 import * as React from "react"
-import WeeksAlong from "./../components/weeks-along"
+import DateForWeeks from "./../components/date-for-weeks"
 
-class DateForm extends React.Component {
+class DateForWeeksForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {value: new Date().toLocaleDateString()};
+      this.state = {value: 39};
   
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,16 +25,16 @@ class DateForm extends React.Component {
         <>
             <form onSubmit={this.handleSubmit}>
             <label>
-                Date:
+                Weeks:
                 <input type="text" value={this.state.value} onChange={this.handleChange} />
             </label>
             </form>
         
-            <WeeksAlong dateString={this.state.value} />
+            <DateForWeeks weeks={this.state.value} />
            
         </>
       );
     }
   }
 
-  export default DateForm
+  export default DateForWeeksForm
