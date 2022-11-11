@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-const Dates = ({ dateString = ""}: {dateString?: string}) => {
+const WeeksAlong = ({ dateString = ""}: {dateString?: string}) => {
   const et = new Date("10/27/2022")
   const startPgDays = 14 + 5
   const dt = (dateString == "") ? new Date() : new Date(dateString)
@@ -16,4 +16,4 @@ const Dates = ({ dateString = ""}: {dateString?: string}) => {
   )
 }
 
-export default Dates
+export default WeeksAlong
