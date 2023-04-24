@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 
 const WeeksAlong = ({ dateString = ""}: {dateString?: string}) => {
-  const et = new Date("10/27/2022")
+  const et = new Date("04/18/2023")
   const startPgDays = 14 + 5
   const dt = (dateString == "") ? new Date() : new Date(dateString)
   const currentDays = ((dt - et)/ (1000 * 60 * 60 * 24)) + startPgDays
