@@ -8,7 +8,7 @@ Date.prototype.addDays = function(days) {
 }
 
 const DateForWeeks = ({ weeks = 12}: {weeks: number}) => {
-  const et = new Date("10/27/2022")
+  const et = new Date("04/18/2023")
   const startPgDays = 14 + 5
   const dt = et.addDays((weeks * 7) - startPgDays) 
   
