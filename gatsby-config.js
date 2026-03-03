@@ -10,11 +10,11 @@ module.exports = {
     // You can overwrite values here that are used for the SEO component
     // You can also add new values here to query them like usual
     // See all options: https://github.com/LekoArts/gatsby-themes/blob/main/themes/gatsby-theme-cara/gatsby-config.js
-    siteTitle: `pg`,
-    siteTitleAlt: `pg`,
-    siteHeadline: `pg`,
+    siteTitle: `Pregnancy Tracker`,
+    siteTitleAlt: `Pregnancy Tracker`,
+    siteHeadline: `Pregnancy Gestational Age Tracker`,
     siteUrl: `https://pg.gatsbyjs.io/`,
-    siteDescription: `none of your beeswax`,
+    siteDescription: `Track your pregnancy gestational age — supports IVF, natural conception, and due-date-based calculations`,
     siteImage: `/banner.jpg`,
     author: `@rmw`,
   },

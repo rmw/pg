@@ -1,21 +1,18 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { getDateForWeek, ConceptionInfo } from "../../../lib/pregnancy"
 
-Date.prototype.addDays = function(days) {
-  var date = new Date(this.valueOf());
-  date.setDate(date.getDate() + days);
-  return date;
+interface DateForWeeksProps {
+  conceptionInfo: ConceptionInfo
+  weeks?: number
 }
 
-const DateForWeeks = ({ weeks = 12}: {weeks: number}) => {
-  const et = new Date("04/18/2023")
-  const startPgDays = 14 + 5
-  const dt = et.addDays((weeks * 7) - startPgDays) 
-  
+const DateForWeeks = ({ conceptionInfo, weeks = 12 }: DateForWeeksProps) => {
+  const resultDate = getDateForWeek(conceptionInfo, weeks)
 
   return (
-    <div>     
-        <h2>{dt.toLocaleDateString()}</h2>
+    <div>
+      <h2>{resultDate.toLocaleDateString()}</h2>
     </div>
   )
 }

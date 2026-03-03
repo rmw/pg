@@ -1,40 +1,33 @@
 import * as React from "react"
+import { useState } from "react"
 import DateForWeeks from "./../components/date-for-weeks"
+import type { ConceptionInfo } from "../../../lib/pregnancy"
 
-class DateForWeeksForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {value: 39};
-  
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-  
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-      //alert('A name was submitted: ' + this.state.value);
-      event.preventDefault();
-      // 
-    }
-  
-    render() {
-      return (
-        <>
-            <form onSubmit={this.handleSubmit}>
-            <label>
-                Weeks:
-                <input type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
-            </form>
-        
-            <DateForWeeks weeks={this.state.value} />
-           
-        </>
-      );
-    }
-  }
+interface DateForWeeksFormProps {
+  conceptionInfo: ConceptionInfo
+}
 
-  export default DateForWeeksForm
+/** Form that lets users enter a number of weeks and see the corresponding date. */
+const DateForWeeksForm = ({ conceptionInfo }: DateForWeeksFormProps) => {
+  const [weeksInput, setWeeksInput] = useState("39")
+
+  const parsedWeeks = Number(weeksInput) || 0
+
+  return (
+    <>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <label>
+          Weeks:
+          <input
+            type="text"
+            value={weeksInput}
+            onChange={(e) => setWeeksInput(e.target.value)}
+          />
+        </label>
+      </form>
+      <DateForWeeks conceptionInfo={conceptionInfo} weeks={parsedWeeks} />
+    </>
+  )
+}
+
+export default DateForWeeksForm

@@ -1,22 +1,24 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { getGestationalAge, ConceptionInfo } from "../../../lib/pregnancy"
 
-const WeeksAlong = ({ dateString = ""}: {dateString?: string}) => {
-  const et = new Date("04/18/2023")
-  const startPgDays = 14 + 5
-  const dt = (dateString == "") ? new Date() : new Date(dateString)
-  const currentDays = ((dt - et)/ (1000 * 60 * 60 * 24)) + startPgDays
-  const currentWeeks = Math.floor(currentDays / 7)
-  const currentDaysLeft = Math.floor(currentDays % 7)
-  const url = "https://www.whattoexpect.com/pregnancy/week-by-week/week-" + currentWeeks + ".aspx"
+interface WeeksAlongProps {
+  conceptionInfo: ConceptionInfo
+  dateString?: string
+}
+
+const WeeksAlong = ({ conceptionInfo, dateString = "" }: WeeksAlongProps) => {
+  const onDate = dateString === "" ? new Date() : new Date(dateString)
+  const ga = getGestationalAge(conceptionInfo, onDate)
+  const weekInfoUrl = `https://www.whattoexpect.com/pregnancy/week-by-week/week-${ga.weeks}.aspx`
 
   return (
-    <div>     
-        <h2>
-          <a href={url}>
-            {currentWeeks} weeks and {currentDaysLeft} days
-          </a>
-        </h2>
+    <div>
+      <h2>
+        <a href={weekInfoUrl}>
+          {ga.weeks} weeks and {ga.days} days
+        </a>
+      </h2>
     </div>
   )
 }
