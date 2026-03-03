@@ -1,22 +1,35 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import {
+  calculateLMP,
+  gestationalAge,
+  weekGuideUrl,
+} from "../../../lib/pregnancy"
+import type { ConceptionInfo } from "../../../lib/pregnancy"
 
-const WeeksAlong = ({ dateString = ""}: {dateString?: string}) => {
-  const et = new Date("04/18/2023")
-  const startPgDays = 14 + 5
-  const dt = (dateString == "") ? new Date() : new Date(dateString)
-  const currentDays = ((dt - et)/ (1000 * 60 * 60 * 24)) + startPgDays
-  const currentWeeks = Math.floor(currentDays / 7)
-  const currentDaysLeft = Math.floor(currentDays % 7)
-  const url = "https://www.whattoexpect.com/pregnancy/week-by-week/week-" + currentWeeks + ".aspx"
+/*
+ * Configure your conception details here.
+ * See src/lib/pregnancy.ts for supported methods: "ivf", "natural", "dueDate".
+ */
+const myConception: ConceptionInfo = {
+  method: "ivf",
+  transferDate: new Date(2023, 3, 18), // April 18 2023
+  embryoAgeDays: 5,
+}
+const derivedLmp = calculateLMP(myConception)
+
+const WeeksAlong = ({ dateString = "" }: { dateString?: string }) => {
+  const targetDate = dateString === "" ? new Date() : new Date(dateString)
+  const ga = gestationalAge(derivedLmp, targetDate)
+  const guideLink = weekGuideUrl(ga.weeks)
 
   return (
-    <div>     
-        <h2>
-          <a href={url}>
-            {currentWeeks} weeks and {currentDaysLeft} days
-          </a>
-        </h2>
+    <div>
+      <h2>
+        <a href={guideLink}>
+          {ga.weeks} weeks and {ga.days} days
+        </a>
+      </h2>
     </div>
   )
 }

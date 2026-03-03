@@ -1,21 +1,28 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import {
+  calculateLMP,
+  dateAtWeek,
+} from "../../../lib/pregnancy"
+import type { ConceptionInfo } from "../../../lib/pregnancy"
 
-Date.prototype.addDays = function(days) {
-  var date = new Date(this.valueOf());
-  date.setDate(date.getDate() + days);
-  return date;
+/*
+ * Configure your conception details here.
+ * See src/lib/pregnancy.ts for supported methods: "ivf", "natural", "dueDate".
+ */
+const myConception: ConceptionInfo = {
+  method: "ivf",
+  transferDate: new Date(2023, 3, 18), // April 18 2023
+  embryoAgeDays: 5,
 }
+const derivedLmp = calculateLMP(myConception)
 
-const DateForWeeks = ({ weeks = 12}: {weeks: number}) => {
-  const et = new Date("04/18/2023")
-  const startPgDays = 14 + 5
-  const dt = et.addDays((weeks * 7) - startPgDays) 
-  
+const DateForWeeks = ({ weeks = 12 }: { weeks: number }) => {
+  const targetDate = dateAtWeek(derivedLmp, weeks)
 
   return (
-    <div>     
-        <h2>{dt.toLocaleDateString()}</h2>
+    <div>
+      <h2>{targetDate.toLocaleDateString()}</h2>
     </div>
   )
 }
