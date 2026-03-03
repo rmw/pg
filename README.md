@@ -1,111 +1,107 @@
-<p align="center">
-  <a href="https://cara.lekoarts.de">
-    <img alt="LekoArts" src="https://img.lekoarts.de/gatsby/gatsby-site-illustration.png" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby Starter Portfolio: Cara
-</h1>
+# Pregnancy Tracker
 
-<p align="center">
-  <a href="https://github.com/LekoArts/gatsby-starter-portfolio-cara/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-0BSD-blue.svg" alt="Gatsby Starter Portfolio: Cara is released under the 0BSD license." />
-  </a>
-  <a href="https://github.com/sponsors/LekoArts">
-    <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/LekoArts">
-  </a>
-  <a href="https://www.lekoarts.de?utm_source=cara&utm_medium=Starter">
-    <img alt="Website" src="https://img.shields.io/badge/-website-blue">
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=lekoarts_de">
-    <img src="https://img.shields.io/twitter/follow/lekoarts_de.svg?label=Follow%20@lekoarts_de" alt="Follow @lekoarts_de" />
-  </a>
-</p>
+A simple, open-source pregnancy tracker that calculates gestational age and key dates. Supports multiple conception methods including IVF (with any embryo age), natural conception, and due-date-only input.
 
-Playful and Colorful One-Page portfolio featuring Parallax effects and animations. Using the Gatsby Theme [`@lekoarts/gatsby-theme-cara`](https://github.com/LekoArts/gatsby-themes/tree/main/themes/gatsby-theme-cara).
+## Features
 
-[**Demo Website**](https://cara.lekoarts.de)
+- **"How far along am I?"** — Enter a date and see the gestational age in weeks and days, with a link to a week-by-week guide.
+- **"What date will I be _X_ weeks?"** — Enter a week number to find the calendar date.
+- **Multiple conception methods** — IVF with 3-day blast, 5-day blast, or any embryo age; natural conception (known LMP); or just the estimated due date.
+- **Pure calculation library** — All pregnancy math is in `src/lib/pregnancy.ts` with no UI dependencies, making it easy to test and reuse.
 
-Also be sure to check out other [Free & Open Source Gatsby Themes](https://themes.lekoarts.de) and my [Personal Website](https://www.lekoarts.de?utm_source=cara&utm_medium=Starter).
+## Quick Start
 
-## ✨ Features
+### Prerequisites
 
-- Theme UI-based theming
-- react-spring Parallax Effect
-- CSS Animations on Shapes
+- [Node.js](https://nodejs.org/) 18 or later
+- npm
 
-## 🚀 Getting Started
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/LekoArts/gatsby-starter-portfolio-cara)
-
-### 1. **Create a Gatsby site.**
-
-Use the Gatsby CLI to clone the site and install dependencies:
+### Install & Run
 
 ```sh
-npx gatsby new gatsby-starter-portfolio-cara https://github.com/LekoArts/gatsby-starter-portfolio-cara
+npm install
+npm run develop
 ```
 
-### 2. **Navigate to your new project.**
+The site will be available at `http://localhost:8000`.
+
+### Configure Your Pregnancy
+
+Edit the conception details in the component files under `src/@lekoarts/gatsby-theme-cara/components/`. Both `weeks-along.tsx` and `date-for-weeks.tsx` contain a `myConception` object you can update:
+
+```ts
+// IVF example (5-day blast transferred on April 18 2023)
+const myConception: ConceptionInfo = {
+  method: "ivf",
+  transferDate: new Date(2023, 3, 18), // month is 0-indexed
+  embryoAgeDays: 5,
+}
+
+// Natural conception (known last menstrual period)
+const myConception: ConceptionInfo = {
+  method: "natural",
+  lmpDate: new Date(2023, 5, 1),
+}
+
+// Due date only (from ultrasound or provider)
+const myConception: ConceptionInfo = {
+  method: "dueDate",
+  dueDate: new Date(2024, 0, 4),
+}
+```
+
+## Pregnancy Calculation Library
+
+The core logic lives in [`src/lib/pregnancy.ts`](src/lib/pregnancy.ts) and is fully independent of React or Gatsby. Key exports:
+
+| Function | Description |
+|---|---|
+| `calculateLMP(info)` | Derive the equivalent LMP date from any conception method |
+| `gestationalAge(lmp, date)` | Get `{ weeks, days }` for a given date |
+| `dateAtWeek(lmp, week)` | Calendar date when a given week starts |
+| `dueDate(lmp)` | Estimated due date (40 weeks from LMP) |
+| `trimester(weeks)` | Trimester number (1, 2, or 3) |
+| `weekGuideUrl(weeks)` | Link to the What to Expect guide for that week |
+
+### How LMP is Derived
+
+All methods convert to an equivalent **Last Menstrual Period (LMP)** date, which is the standard obstetric reference point:
+
+- **IVF**: `LMP = transferDate − (14 + embryoAgeDays)`
+- **Natural**: LMP is used directly.
+- **Due date**: `LMP = dueDate − 280 days`
+
+## Testing
 
 ```sh
-cd gatsby-starter-portfolio-cara
+npm test
 ```
 
-### 3. **Open the code and start customizing!**
+Tests are in `src/lib/__tests__/pregnancy.test.ts` and cover all calculation functions, edge cases, and backwards-compatibility with the original hardcoded logic.
 
-Start the site by running `npm run develop`.
+## Scripts
 
-Your site is now running at `http://localhost:8000`!
+| Script | Description |
+|---|---|
+| `npm run develop` | Start the development server |
+| `npm run build` | Build the production site |
+| `npm run serve` | Serve the production build locally |
+| `npm test` | Run the test suite |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run clean` | Clear the Gatsby cache |
 
-If you want to learn more about how you can use a Gatsby starter that is configured with a Gatsby theme, you can check out this [shorter](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/using-a-gatsby-theme/) or [longer](https://www.gatsbyjs.com/tutorial/using-a-theme/) tutorial. The tutorials don't exactly apply to this starter however the concepts are the same.
+## Tech Stack
 
-## 📝 Using and modifying this starter
+- [Gatsby](https://www.gatsbyjs.com/) v5 with the [Cara theme](https://github.com/LekoArts/gatsby-themes/tree/main/themes/gatsby-theme-cara)
+- [React](https://react.dev/) 18
+- [TypeScript](https://www.typescriptlang.org/)
+- [Jest](https://jestjs.io/) + [ts-jest](https://kulshekhar.github.io/ts-jest/) for testing
+- [Theme UI](https://theme-ui.com/) for styling
 
-**Important Note:** Please read the guide [Shadowing in Gatsby Themes](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/shadowing/) to understand how to customize the underlying theme!
+## Contributing
 
-This starter creates a new Gatsby site that installs and configures the theme [`@lekoarts/gatsby-theme-cara`](https://github.com/LekoArts/gatsby-themes/tree/main/themes/gatsby-theme-cara).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and guidelines.
 
-Have a look at the theme's README and files to see what options are available and how you can shadow the various components including Theme UI. Generally speaking you will want to place your files into `src/@lekoarts/gatsby-theme-cara/` to shadow/override files. The Theme UI config can be configured by shadowing its files in `src/gatsby-plugin-theme-ui/`.
+## License
 
-### Changing content
-
-The content of this project is defined in four `.mdx` files inside the theme's `sections` folder. You can override the files `intro.mdx`, `projects.mdx`, `about.mdx` and `contact.mdx`. This starter has overridden all files for you already.
-
-You have to use the `<ProjectCard />` component inside `projects.mdx` to display the cards. Example:
-
-```md
-## Projects
-
-<ProjectCard title="Freiheit" link="https://www.behance.net/gallery/58937147/Freiheit" bg="linear-gradient(to right, #D4145A 0%, #FBB03B 100%)">
-This project is my entry to Adobe's #ChallengeYourPerspective contest.
-</ProjectCard>
-```
-
-### Change your `static` folder
-
-The `static` folder contains the icons, social media images and `robots.txt`. Don't forget to change these files, too! You can use [Real Favicon Generator](https://realfavicongenerator.net/) to generate the image files inside `static`.
-
-## 🤔 Questions or problems?
-
-If you have general questions or need help with Gatsby, please go to one of the [support platforms](https://www.gatsbyjs.com/contributing/community/#where-to-get-support) mentioned in Gatsby's documentation. If you have a specific question about this project, you can head to the [GitHub Discussions](https://github.com/LekoArts/gatsby-themes/discussions) of the repository.
-
-## 🎓 Learning Gatsby
-
-Looking for more guidance? Full documentation for Gatsby lives [on Gatsby's website](https://www.gatsbyjs.com/).
-
-### Themes
-
-To learn more about Gatsby themes specifically, I recommend checking out the [theme docs](https://www.gatsbyjs.com/docs/themes/).
-
-### General
-
-- **For most developers, I recommend starting with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/docs/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
-
-- **To dive straight into code samples, head [to Gatsby's documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the _How-to Guides_ and _Reference_ items in the primary navigation.
-
-## 🌟 Supporting me
-
-Thanks for using this project! I'm always interested in seeing what people do with my projects, so don't hesitate to tag me on [Twitter](https://twitter.com/lekoarts_de) and share the project with me.
-
-Please star this project, share it on Social Media or consider supporting me on [Patreon](https://www.patreon.com/lekoarts) or [GitHub Sponsor](https://github.com/sponsors/LekoArts)!
+[0BSD](LICENSE)
