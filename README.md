@@ -10,14 +10,35 @@ A configurable pregnancy week tracker that supports multiple conception types in
 - **Configurable** — set your conception type and date in a config file
 - **Multiple conception types** — LMP, natural, IVF fresh, IVF 3-day, IVF 5-day, IVF 6-day
 
+## Prerequisites
+
+This project requires **Node.js 18**. We use [mise](https://mise.jdx.dev/) to manage the Node version:
+
+```bash
+# Install mise (if you don't have it)
+brew install mise
+
+# Activate mise in your shell (add to your .zshrc / .bashrc)
+eval "$(mise activate)"
+
+# Install the correct Node version (automatic from mise.toml)
+mise install
+```
+
+If you prefer another version manager (`nvm`, `fnm`, `volta`, etc.), just ensure you're running Node 18.
+
 ## Quick Start
 
 1. Clone this repo
-2. Copy the example config and edit with your details:
+2. Install the correct Node version:
+   ```bash
+   mise install
+   ```
+3. Copy the example config and edit with your details:
    ```bash
    cp pregnancy.config.example.json pregnancy.config.json
    ```
-3. Install dependencies and start:
+4. Install dependencies and start:
    ```bash
    npm install
    npm run develop
