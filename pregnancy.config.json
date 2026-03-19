@@ -1,0 +1,10 @@
+{
+  "conceptionType": "ivf-5day",
+  "date": "2023-04-18",
+  "milestones": [
+    { "label": "Second Trimester", "weeks": 14 },
+    { "label": "Third Trimester", "weeks": 28 },
+    { "label": "39 Weeks", "weeks": 39 },
+    { "label": "Due Date", "weeks": 40 }
+  ]
+}

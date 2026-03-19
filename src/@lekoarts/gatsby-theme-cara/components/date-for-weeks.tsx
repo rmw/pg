@@ -1,17 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { getDateForWeek } from "../../../lib/pregnancy"
+import { buildConceptionInfo } from "../../../lib/config"
+import config from "../../../../pregnancy.config.json"
 
-Date.prototype.addDays = function(days) {
-  var date = new Date(this.valueOf());
-  date.setDate(date.getDate() + days);
-  return date;
-}
+const conceptionInfo = buildConceptionInfo(config)
 
 const DateForWeeks = ({ weeks = 12}: {weeks: number}) => {
-  const et = new Date("04/18/2023")
-  const startPgDays = 14 + 5
-  const dt = et.addDays((weeks * 7) - startPgDays) 
-  
+  const dt = getDateForWeek(conceptionInfo, Number(weeks))
 
   return (
     <div>     

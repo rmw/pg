@@ -1,20 +1,21 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { getWeeksAndDays, getWhatToExpectUrl, dateOnly } from "../../../lib/pregnancy"
+import { buildConceptionInfo } from "../../../lib/config"
+import config from "../../../../pregnancy.config.json"
+
+const conceptionInfo = buildConceptionInfo(config)
 
 const WeeksAlong = ({ dateString = ""}: {dateString?: string}) => {
-  const et = new Date("04/18/2023")
-  const startPgDays = 14 + 5
-  const dt = (dateString == "") ? new Date() : new Date(dateString)
-  const currentDays = ((dt - et)/ (1000 * 60 * 60 * 24)) + startPgDays
-  const currentWeeks = Math.floor(currentDays / 7)
-  const currentDaysLeft = Math.floor(currentDays % 7)
-  const url = "https://www.whattoexpect.com/pregnancy/week-by-week/week-" + currentWeeks + ".aspx"
+  const asOf = dateString === "" ? new Date() : new Date(dateString)
+  const { weeks, days } = getWeeksAndDays(conceptionInfo, dateOnly(asOf))
+  const url = getWhatToExpectUrl(weeks)
 
   return (
     <div>     
         <h2>
           <a href={url}>
-            {currentWeeks} weeks and {currentDaysLeft} days
+            {weeks} weeks and {days} days
           </a>
         </h2>
     </div>
