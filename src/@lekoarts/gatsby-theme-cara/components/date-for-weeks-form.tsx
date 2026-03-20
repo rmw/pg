@@ -1,40 +1,25 @@
 import * as React from "react"
 import DateForWeeks from "./../components/date-for-weeks"
+import { getMilestoneConfig } from "../../../lib/config"
+import config from "../../../../pregnancy.config.json"
 
-class DateForWeeksForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {value: 39};
-  
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-  
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-      //alert('A name was submitted: ' + this.state.value);
-      event.preventDefault();
-      // 
-    }
-  
-    render() {
-      return (
-        <>
-            <form onSubmit={this.handleSubmit}>
-            <label>
-                Weeks:
-                <input type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
-            </form>
-        
-            <DateForWeeks weeks={this.state.value} />
-           
-        </>
-      );
-    }
-  }
+const milestones = getMilestoneConfig(config)
+const defaultWeeks = milestones.length > 0 ? milestones[milestones.length - 1].weeks : 40
 
-  export default DateForWeeksForm
+const DateForWeeksForm = () => {
+  const [value, setValue] = React.useState(defaultWeeks)
+
+  return (
+    <>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <label>
+          Weeks:
+          <input type="text" value={value} onChange={(e) => setValue(Number(e.target.value) || 0)} />
+        </label>
+      </form>
+      <DateForWeeks weeks={value} />
+    </>
+  )
+}
+
+export default DateForWeeksForm

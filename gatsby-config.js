@@ -25,14 +25,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Cara - @lekoarts/gatsby-theme-cara`,
-        short_name: `Cara`,
-        description: `Playful and Colorful One-Page portfolio featuring Parallax effects and animations`,
+        name: `Pregnancy Tracker`,
+        short_name: `Pregnancy Tracker`,
+        description: `A configurable pregnancy week tracker supporting IVF and natural conception`,
         start_url: `/`,
         background_color: `#141821`,
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
-        // theme_color: `#f6ad55`,
         display: `standalone`,
         icons: [
           {

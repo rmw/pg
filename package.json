@@ -8,8 +8,6 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "develop:cypress": "cross-env CYPRESS_SUPPORT=y yarn develop",
-    "build:cypress": "cross-env CYPRESS_SUPPORT=y yarn build",
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
@@ -25,7 +23,6 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "cross-env": "^7.0.3",
     "jest": "^30.3.0",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"

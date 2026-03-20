@@ -12,12 +12,12 @@ const WeeksAlong = ({ dateString = ""}: {dateString?: string}) => {
   const url = getWhatToExpectUrl(weeks)
 
   return (
-    <div>     
-        <h2>
-          <a href={url}>
-            {weeks} weeks and {days} days
-          </a>
-        </h2>
+    <div>
+      <h2>
+        <a href={url}>
+          {weeks} weeks and {days} days
+        </a>
+      </h2>
     </div>
   )
 }

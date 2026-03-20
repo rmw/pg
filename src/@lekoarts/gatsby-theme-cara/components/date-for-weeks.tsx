@@ -10,8 +10,8 @@ const DateForWeeks = ({ weeks = 12}: {weeks: number}) => {
   const dt = getDateForWeek(conceptionInfo, Number(weeks))
 
   return (
-    <div>     
-        <h2>{dt.toLocaleDateString()}</h2>
+    <div>
+      <h2>{dt.toLocaleDateString()}</h2>
     </div>
   )
 }
